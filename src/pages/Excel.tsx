@@ -1,8 +1,22 @@
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonButtons, IonCard, IonCardContent, IonChip, IonContent, IonHeader, IonIcon, IonItem, IonLabel, IonMenuButton, IonPage, IonTitle, IonToolbar, useIonLoading } from '@ionic/react';
 import React from 'react';
-import ExploreContainer from '../components/ExploreContainer';
+import { documentsOutline } from 'ionicons/icons';
 
 const Excel: React.FC = () => {
+  const [present, dismiss] = useIonLoading();
+  const doExcel = async (event: any) => {
+    event.preventDefault();
+    await present('Creating excels...');
+    try {
+      const response = await fetch('http://localhost:8080/newExcel');
+      const accounts = await response.text();
+      console.log(accounts);
+    } catch (error) {
+      console.error('Error fetching Excel:', error);
+    } finally {
+      dismiss();
+    }
+  };
   return (
     <IonPage>
       <IonHeader>
@@ -13,14 +27,25 @@ const Excel: React.FC = () => {
           <IonTitle>Székesfehérvár</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
-        Excel
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Blank</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <ExploreContainer />
+      <IonContent>
+      <IonCard>
+        <IonCardContent className="ion-no-padding">
+          <IonItem lines="none">
+            <IonIcon icon={documentsOutline} slot="start" />
+            <IonLabel>
+              Munkalapok elkészítése
+              <p>Havi vezénylés szerint</p>
+            </IonLabel>
+            <IonChip
+              slot="end"
+              color={'secondary'}
+              onClick={doExcel}
+            >
+              GO
+            </IonChip>
+          </IonItem>
+        </IonCardContent>
+      </IonCard>
       </IonContent>
     </IonPage>
   );
