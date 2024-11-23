@@ -1,0 +1,7 @@
+{
+  "name": "PostaFE",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}
