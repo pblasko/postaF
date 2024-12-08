@@ -8,7 +8,7 @@ const Excel: React.FC = () => {
     event.preventDefault();
     await present('Creating excels...');
     try {
-      const response = await fetch('http://localhost:8080/newExcel');
+      const response = await fetch('http://192.168.1.239:8000/newExcel');
       const accounts = await response.text();
       console.log(accounts);
     } catch (error) {
